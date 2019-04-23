@@ -3,7 +3,6 @@ const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 
-
 function build() {
   return gulp.src('app/**.js', { sourcemaps: true })
     .pipe(babel({
@@ -14,11 +13,11 @@ function build() {
     .pipe(gulp.dest('dist', { sourcemaps: true })); 
 }
 
-function rebuild() {
-  console.log('Files changed');
+function watchFiles(cd) {
+  gulp.watch('app/**.js', build);
 
-  return build();
+  cd();
 }
 
 gulp.task('default', build);
-gulp.watch('app/**.js', rebuild);
+gulp.task('watchFiles', watchFiles);
